@@ -33,18 +33,23 @@ SRCS = $(wildcard $(SRCDIR)/*.cpp) \
 	$(wildcard $(SRCDIR)/Subsystems/*.cpp)
 
 
-OBJS =  $(SRCS:%.cpp=%.o)
-#$(SRCS:src/%.cpp=%.o)
+# OBJS = $(SRCS:%.cpp=%.o)
+OBJS = $(SRCS:src/%.cpp=%.o)
+# OBJS = $(notdir $(SRCS:%.cpp=%.o))
 
 TARGET = FRCUserProgram
 CPPFLAGS = -std=c++1y -I"$(WPILIB)/cpp/current/include" -I"$(SRCDIR)" -O0 -g3 -Wall -c -fmessage-length=0
 LDFLAGS = -L$(WPILIB)/cpp/current/lib -Wl,-rpath,/opt/GenICam_v2_3/bin/Linux_armv7-a
 #arm-frc-linux-gnueabi-g++ "-LC:\\Users\\R2D2/wpilib/cpp/current/lib" -Wl,-rpath,/opt/GenICam_v2_3/bin/Linux_armv7-a -o FRCUserProgram "src\\Subsystems\\ExampleSubsystem.o" "src\\Robot.o" "src\\OI.o" "src\\Commands\\ExampleCommand.o" "src\\CommandBase.o" -lwpi 
 
-OUTPUT_OPTION = -o $(OBJDIR)/$(notdir $@)
+OUTPUT_OPTION = -o $@
 
-build: mkdir-$(OBJDIR) mkdir-$(BINDIR) $(OBJS)
-	$(CXX) $(addprefix $(OBJDIR)/, $(notdir $(OBJS))) $(LDFLAGS) -o $(BINDIR)/$(OUT) -lwpi
+build: mkdir-$(OBJDIR) mkdir-$(BINDIR) $(addprefix $(OBJDIR)/, $(OBJS))
+	$(CXX) $(addprefix $(OBJDIR)/, $(OBJS)) $(LDFLAGS) -o $(BINDIR)/$(OUT) -lwpi
+
+dist/%.o: src/%.cpp
+	mkdir -p $(dir $@)
+	$(CXX) -c $(CFLAGS) $(CPPFLAGS) $< $(OUTPUT_OPTION)
 
 # create the OBJDIR if it does not exist
 # $(OBJDIR):
@@ -55,7 +60,8 @@ build: mkdir-$(OBJDIR) mkdir-$(BINDIR) $(OBJS)
 
 mkdir-%:
 	mkdir -p $(@:mkdir-%=%)
-
+dist/%:
+	@echo $@
 
 test:
 	@echo $(OBJS)
