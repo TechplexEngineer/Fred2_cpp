@@ -37,3 +37,49 @@ void Grabber::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
+void Grabber::grab(bool grab) {
+	toteGripper->Set(grab);
+}
+void Grabber::grab() {
+	grab(false);
+}
+void Grabber::ungrab() {
+	grab(true);
+}
+void Grabber::push(bool push) {
+	if (push) {
+		pusher->Set(DoubleSolenoid::kForward);
+	} else {
+		pusher->Set(DoubleSolenoid::kReverse);
+	}
+}
+void Grabber::push() {
+	push(true);
+}
+void Grabber::unpush() {
+	push(false);
+}
+void Grabber::topLights(bool light) {
+	// if (light) {
+	// 	Robot.lights.LightBar->Set(0, 15, 0);
+	// 	Robot.lights.LiftLights->Set(0, 15, 0);
+	// } else {
+	// 	Robot.lights.LightBar->Set(15, 0, 15);
+	// 	Robot.lights.LiftLights->Set(15, 0, 0);
+	// }
+}
+
+void Grabber::upright(bool upright) {
+	upright_out = upright;
+	containerUpright->Set(upright);
+}
+void Grabber::upright() {
+	upright(false);
+}
+void Grabber::uprightOut() {
+	upright(true);
+}
+void Grabber::uprightToggle() {
+	upright(! upright_out);
+}
+
