@@ -86,10 +86,12 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
+	this->AlwaysPeriodic();
 	Scheduler::GetInstance()->Run();
 }
 
 void Robot::TeleopInit() {
+	grabbercmd->Start();
 	// This makes sure that the autonomous stops running when
 	// teleop starts running. If you want the autonomous to 
 	// continue until interrupted by another command, remove
@@ -104,6 +106,7 @@ void Robot::TeleopPeriodic() {
 
 void Robot::TestPeriodic() {
 	lw->Run();
+	this->AlwaysPeriodic();
 }
 
 void Robot::AlwaysPeriodic() {

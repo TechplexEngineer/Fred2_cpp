@@ -67,7 +67,7 @@ public:
 	virtual void TestPeriodic();
 
 private:
-	oi_Grabber* grabbercmd;
+	Command *grabbercmd;
 	SendableChooser* autoChooser;
 };
 #endif

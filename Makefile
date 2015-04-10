@@ -42,11 +42,14 @@ LDFLAGS = -L$(WPILIB)/cpp/current/lib -Wl,-rpath,/opt/GenICam_v2_3/bin/Linux_arm
 OUTPUT_OPTION = -o $@
 
 build: mkdir-$(OBJDIR) mkdir-$(BINDIR) $(addprefix $(OBJDIR)/, $(OBJS))
-	$(CXX) $(addprefix $(OBJDIR)/, $(OBJS)) $(LDFLAGS) -o $(BINDIR)/$(OUT) -lwpi
+	@echo Linking
+	@$(CXX) $(addprefix $(OBJDIR)/, $(OBJS)) $(LDFLAGS) -o $(BINDIR)/$(OUT) -lwpi
+
 
 dist/%.o: src/%.cpp
+	@echo Compiling $(notdir $@)
 	@mkdir -p $(dir $@)
-	$(CXX) -c $(CFLAGS) $(CPPFLAGS) $< $(OUTPUT_OPTION)
+	@$(CXX) -c $(CFLAGS) $(CPPFLAGS) $< $(OUTPUT_OPTION)
 
 mkdir-%:
 	@mkdir -p $(@:mkdir-%=%)
