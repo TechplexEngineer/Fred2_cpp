@@ -30,7 +30,8 @@ OBJDIR = dist
 BINDIR = bin
 SRCS = $(wildcard $(SRCDIR)/*.cpp) \
 	$(wildcard $(SRCDIR)/Commands/*.cpp) \
-	$(wildcard $(SRCDIR)/Subsystems/*.cpp)
+	$(wildcard $(SRCDIR)/Subsystems/*.cpp) \
+	$(wildcard $(SRCDIR)/NavX/*.cpp)
 
 
 OBJS = $(SRCS:src/%.cpp=%.o)
